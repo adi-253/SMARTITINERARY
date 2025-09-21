@@ -60,7 +60,7 @@ async def flight_schedules(flights:FlightSchedule) -> List[FlightResponse]:
             destination_airport=destination_airport,
             duration=details.get("total_duration","Unknown Duration"),
             stops=stops,
-            price=details.get("price", "N/A")))  # default price in usd
+            price=str(details.get("price", "0"))))  # default price in usd
     
     logger.info(f"Found {len(formatted_flights)} flights")
     return formatted_flights

@@ -35,7 +35,7 @@ class FlightResponse(BaseModel):
     """The Response format for flight api result"""
     destination_airport: str
     duration: int
-    stops: str
+    stops: int
     price: str  # in usd by default need to add it later
     # airline: str    # this is for immediate airport if stops is not 0
     # aeroplane: str

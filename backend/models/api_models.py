@@ -36,6 +36,8 @@ class FlightResponse(BaseModel):
     destination_airport: str
     duration: int
     stops: int
+    departure_time: str  # of first flight
+    arrival_time:str    # at the destination
     price: str  # in usd by default need to add it later
     # airline: str    # this is for immediate airport if stops is not 0
     # aeroplane: str

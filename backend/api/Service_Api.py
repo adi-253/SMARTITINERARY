@@ -54,11 +54,15 @@ async def flight_schedules(flights:FlightSchedule) -> List[FlightResponse]:
         stops = len(details["flights"])-1
 
         destination_airport = details.get("flights", [{}])[-1].get("arrival_airport", {}).get("name", "Unknown")
+        departure_time = details.get("flights", [{}])[0].get("departure_airport", {}).get("time", "Unknown")
+        arrival_time = details.get("flights", [{}])[-1].get("arrival_airport", {}).get("time", "Unknown")
 
 
         formatted_flights.append(FlightResponse(
             destination_airport=destination_airport,
             duration=details.get("total_duration","Unknown Duration"),
+            departure_time=departure_time,
+            arrival_time=arrival_time,
             stops=stops,
             price=str(details.get("price", "0"))))  # default price in usd
     

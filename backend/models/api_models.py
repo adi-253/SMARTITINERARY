@@ -4,7 +4,7 @@ from datetime import date
 
 class Sights(BaseModel):
     """Represents query for trip advisor api."""
-    query: str = Field(..., description="What to see, e.g., 'Maldives temples'.")
+    query: str = Field(..., description="What to see, e.g., 'Maldives fun attractions'.")
 
 
 class FlightSchedule(BaseModel):
@@ -17,15 +17,10 @@ class FlightSchedule(BaseModel):
 
 class HotelDetails(BaseModel):
     """Hotel booking details."""
-    check_in_date: date  # Same as inbound date of flight
-    check_out_date: date # Same as outbound date of flight
-    hotel_class: int = Field(..., ge=2, le=5, description="Hotel class (2-5 stars)")
-
-    @field_validator("hotel_class")
-    def validate_hotel_class(cls, v):
-        if not 2 <= v <= 5:
-            raise ValueError("hotel_class must be between 2 and 5")
-        return v
+    city: str
+    check_in_date: str # Same as inbound date of flight
+    check_out_date: str # Same as outbound date of flight
+    hotel_class: str # if multiple classes required can be given like 4,5 with comma separated
 
 class SightsResponse(BaseModel):
     """The response format for trip advisor api result"""

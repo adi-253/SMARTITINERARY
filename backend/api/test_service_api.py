@@ -3,8 +3,7 @@ import os
 import sys
 from datetime import datetime, timedelta
 
-# Add the parent directory to path to resolve imports properly
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append('') 
 
 from backend.models.api_models import Sights, FlightSchedule, HotelDetails
 from backend.api.Service_Api import flight_schedules, hotel_list, tourist_attractions

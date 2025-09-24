@@ -51,3 +51,9 @@ class HotelResponse(BaseModel):
     rating: float
     link: str 
     
+
+class RequestResponse(BaseModel):
+    """ The request body for the api to take which merges all 3 """
+    flight_request: FlightSchedule
+    hotel_request: HotelDetails
+    sights_request: Sights 

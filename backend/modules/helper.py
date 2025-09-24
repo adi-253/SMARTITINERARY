@@ -26,7 +26,7 @@ def format_api_data(data_type: str, data: Union[List[Union[FlightResponse, Hotel
     
     # Handle empty data
     if not data:
-        return f"ℹ️ No {data_type} available."
+        return f"ℹ️ No {data_type} information available."
 
     if data_type == "flights":
         formatted_text = "✈️ **Available Flight Options**:\n\n"

@@ -1,17 +1,18 @@
-import logging
+import sys
+sys.path.append('')
 from fastapi import HTTPException
 from typing import List
 import asyncio
 import serpapi
-from backend.models.api_models import Sights, FlightSchedule, HotelDetails, FlightResponse, HotelResponse, SightsResponse
 import os
+from backend.models.api_models import Sights, FlightSchedule, HotelDetails, FlightResponse, HotelResponse, SightsResponse
+from backend.utils.logger import get_logger
 from dotenv import load_dotenv
 load_dotenv()
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
-serpapi_client = serpapi.Client(api_key=os.getenv("SERP_API_KEY"))
+serpapi_client = serpapi.Client(api_key=os.getenv("SERP_API_KEY"))  # need to export it as export SERP_API_KEY
 
 
 async def run_search(params):
@@ -36,7 +37,7 @@ async def flight_schedules(flights:FlightSchedule) -> List[FlightResponse]:
             }
     search_results = await run_search(params)
     
-    if "error" in search_results:
+    if "error" in search_results:  # should Have just returned empty list would be easier while calling it
         logger.error(f"Error getting flights, error - {search_results['error']}")
         return {"error":search_results["error"]}
     

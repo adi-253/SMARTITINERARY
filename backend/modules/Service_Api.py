@@ -61,7 +61,7 @@ async def flight_schedules(flights:FlightSchedule) -> List[FlightResponse]:
 
         formatted_flights.append(FlightResponse(
             destination_airport=destination_airport,
-            duration=details.get("total_duration","Unknown Duration"),
+            duration=details.get("total_duration",0),
             departure_time=departure_time,
             arrival_time=arrival_time,
             stops=stops,

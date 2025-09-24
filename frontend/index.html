@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Itinerary Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Smart Itinerary Planner</h1>
+      <p>Generate a travel plan by entering basic trip details below.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <form id="itinerary-form">
+          <h2>Flight Details</h2>
+          <div class="grid">
+            <label
+              >Departure Airport (IATA)
+              <input
+                name="departure_airport_code"
+                maxlength="3"
+                placeholder="JFK"
+                required
+              />
+            </label>
+            <label
+              >Arrival Airport (IATA)
+              <input
+                name="arrival_airport_code"
+                maxlength="3"
+                placeholder="LAX"
+                required
+              />
+            </label>
+            <label
+              >Outbound Date
+              <input type="date" name="outbound_date" required />
+            </label>
+            <label
+              >Return Date
+              <input type="date" name="return_date" required />
+            </label>
+          </div>
+
+          <h2>Hotel Details</h2>
+          <div class="grid">
+            <label
+              >City
+              <input name="city" placeholder="Los Angeles" required />
+            </label>
+            <label
+              >Check-in Date
+              <input type="date" name="check_in_date" required />
+            </label>
+            <label
+              >Check-out Date
+              <input type="date" name="check_out_date" required />
+            </label>
+            <label
+              >Hotel Class (e.g. 4,5)
+              <input name="hotel_class" placeholder="4,5" />
+            </label>
+          </div>
+
+          <h2>Sights / Interests</h2>
+          <label
+            >Search Query
+            <input
+              name="sights_query"
+              placeholder="Los Angeles top attractions"
+              required
+            />
+          </label>
+
+          <div class="actions">
+            <button type="submit">Generate Itinerary</button>
+            <button type="reset" class="secondary">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="output-section" class="card hidden">
+        <h2>Generated Itinerary</h2>
+        <div id="status" class="status"></div>
+        <div id="itinerary" class="itinerary"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Backend endpoint:
+        <code id="apiBase">http://localhost:8000/plan-itinerary</code>
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

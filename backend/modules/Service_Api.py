@@ -113,7 +113,7 @@ async def tourist_attractions(attractions_request:Sights) -> List[SightsResponse
         "engine": "tripadvisor",
         "q": attractions_request.query,
         "ssrc": "A",
-        "limit": 10  # keeping limit as 10 here
+        "limit": 20  # keeping limit as 10 here (depends on the number of days also)
     }
     
     search_results = await run_search(params)

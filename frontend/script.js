@@ -3,10 +3,16 @@ const form = document.getElementById('itinerary-form');
 const outputSection = document.getElementById('output-section');
 const itineraryDiv = document.getElementById('itinerary');
 const statusDiv = document.getElementById('status');
+const downloadPdfBtn = document.getElementById('download-pdf-btn');
 
 // If backend served under a different host/port adjust here or read from query param
-const API_URL = 'https://smartitinerary-2.onrender.com/plan-itinerary';
+// const API_URL = 'https://smartitinerary-2.onrender.com/plan-itinerary';
 
+const API_URL = 'http://localhost:8000/plan-itinerary';
+const PDF_URL = 'http://localhost:8000/generate-pdf';
+
+// Store the current itinerary text for PDF generation
+let currentItinerary = '';
 
 function setStatus(msg, type = 'info') {
   statusDiv.textContent = msg;
@@ -40,6 +46,7 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   outputSection.classList.remove('hidden');
   itineraryDiv.textContent = '';
+  downloadPdfBtn.classList.add('hidden'); // Hide download button while loading
   setStatus('Requesting itinerary...');
   const fd = new FormData(form);
   const payload = buildPayload(fd);
@@ -58,13 +65,16 @@ form.addEventListener('submit', async (e) => {
     const data = await res.json();
     setStatus('Itinerary generated successfully!', 'success');
     // Backend returns markdown-like text. We can do a very small conversion for headers + bold
-    itineraryDiv.innerHTML = renderMarkdownLite(
-      data.itinerary || 'No itinerary returned.',
-    );
+    currentItinerary = data.itinerary || 'No itinerary returned.';
+    itineraryDiv.innerHTML = renderMarkdownLite(currentItinerary);
+
+    // Show download button after successful generation
+    downloadPdfBtn.classList.remove('hidden');
   } catch (err) {
     console.error(err);
     setStatus('Error: ' + err.message, 'error');
     itineraryDiv.textContent = '';
+    currentItinerary = '';
   }
 });
 
@@ -90,3 +100,41 @@ function renderMarkdownLite(markdown) {
   form.check_in_date.value = fmt(plus7);
   form.check_out_date.value = fmt(plus12);
 })();
+
+// Download PDF button handler
+downloadPdfBtn.addEventListener('click', async () => {
+  if (!currentItinerary) {
+    alert('No itinerary available to download');
+    return;
+  }
+
+  try {
+    setStatus('Generating PDF...');
+    const res = await fetch(PDF_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ itinerary_text: currentItinerary }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: res.statusText }));
+      throw new Error(err.detail || 'Server error');
+    }
+
+    // Convert response to blob and trigger download
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Itinerary.pdf';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+
+    setStatus('PDF downloaded successfully!', 'success');
+  } catch (err) {
+    console.error(err);
+    setStatus('Error generating PDF: ' + err.message, 'error');
+  }
+});

@@ -12,7 +12,7 @@ app = FastAPI(title="Travel Agent")
 # 405 Method Not Allowed was likely from a blocked OPTIONS preflight for application/json POST.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],            # In production, restrict this to specific origins (e.g., http://localhost:5173)
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

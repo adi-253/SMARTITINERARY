@@ -95,6 +95,14 @@ button.secondary {
 button.secondary:hover {
   background: #4b5a6d;
 }
+.download-btn {
+  margin-top: 1rem;
+  background: #10b981;
+  width: 100%;
+}
+.download-btn:hover {
+  background: #059669;
+}
 .status {
   margin: 0.75rem 0 1rem;
   font-size: 0.9rem;

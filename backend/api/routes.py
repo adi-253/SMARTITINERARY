@@ -2,9 +2,10 @@ import sys
 sys.path.append('')
 import asyncio
 from fastapi import APIRouter, HTTPException
-from models.api_models import RequestResponse
+from fastapi.responses import StreamingResponse
+from models.api_models import RequestResponse, ItineraryResponse, PDFRequest
 from modules.Service_Api import flight_schedules, hotel_list, tourist_attractions
-from modules.helper import format_api_data
+from modules.helper import format_api_data, download_data
 from agents.crew_agent import generate_itinerary
 from utils.logger import get_logger
 
@@ -66,7 +67,7 @@ async def plan_itinerary(request: RequestResponse):
             )
         
         # Generate detailed itinerary using the AI agent
-        itinerary = await generate_itinerary(
+        output = await generate_itinerary(
             must_visit_locations=data["sights_text"],
             flights_text=data["flight_text"],
             hotels_text=data["hotel_text"],
@@ -74,12 +75,23 @@ async def plan_itinerary(request: RequestResponse):
             check_out_date=request.hotel_request.check_out_date
         )
         
-        return {
-            "itinerary": itinerary
-        }
+        response = ItineraryResponse(itinerary=output)
+        
+        return response
+        
         
     except HTTPException as he:
         raise he
     except Exception as e:
         logger.exception("Error planning itinerary")
-        raise HTTPException(status_code=500, detail=str(e))   
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/generate-pdf")
+async def generate_pdf(request: PDFRequest):
+    """Generate PDF from itinerary text."""
+    buffer = download_data(request.itinerary_text)
+    return StreamingResponse(
+        buffer,
+        media_type="application/pdf",
+        headers={"Content-Disposition": "attachment; filename=Itinerary.pdf"}
+    )

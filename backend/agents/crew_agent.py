@@ -1,5 +1,7 @@
 import sys
 sys.path.append('')
+import os
+os.environ["CREWAI_DISABLE_TELEMETRY"] = "true"
 import asyncio
 from crewai import Agent,Task,Process,Crew
 from agents.llm import llm_model

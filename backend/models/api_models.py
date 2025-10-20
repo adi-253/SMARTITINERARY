@@ -57,3 +57,10 @@ class RequestResponse(BaseModel):
     flight_request: FlightSchedule
     hotel_request: HotelDetails
     sights_request: Sights 
+
+class ItineraryResponse(BaseModel):
+    """Final itinerary response"""
+    itinerary: str
+
+class PDFRequest(BaseModel):
+    itinerary_text: str

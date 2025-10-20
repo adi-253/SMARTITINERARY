@@ -6,9 +6,9 @@ const statusDiv = document.getElementById('status');
 const downloadPdfBtn = document.getElementById('download-pdf-btn');
 
 // If backend served under a different host/port adjust here or read from query param
-// const API_URL = 'https://smartitinerary-2.onrender.com/plan-itinerary';
+const API_URL = 'https://smartitinerary-2.onrender.com/plan-itinerary';
 
-const API_URL = 'http://localhost:8000/plan-itinerary';
+// const API_URL = 'http://localhost:8000/plan-itinerary';
 const PDF_URL = 'http://localhost:8000/generate-pdf';
 
 // Store the current itinerary text for PDF generation

@@ -5,7 +5,8 @@ const itineraryDiv = document.getElementById('itinerary');
 const statusDiv = document.getElementById('status');
 
 // If backend served under a different host/port adjust here or read from query param
-const API_URL = 'http://localhost:8000/plan-itinerary';
+const API_URL = 'https://smartitinerary-2.onrender.com/plan-itinerary';
+
 
 function setStatus(msg, type = 'info') {
   statusDiv.textContent = msg;

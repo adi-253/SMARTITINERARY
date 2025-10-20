@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 
 sys.path.append('') 
 
-from backend.models.api_models import Sights, FlightSchedule, HotelDetails
-from backend.modules.Service_Api import flight_schedules, hotel_list, tourist_attractions
+from models.api_models import Sights, FlightSchedule, HotelDetails
+from modules.Service_Api import flight_schedules, hotel_list, tourist_attractions
 
 
 # Calculate dates for the tests - using future dates

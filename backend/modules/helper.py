@@ -6,7 +6,7 @@ from typing import List, Union, Dict, Any
 import asyncio
 
 # Use relative imports - cleaner and more maintainable
-from backend.models.api_models import FlightResponse, HotelResponse, SightsResponse
+from models.api_models import FlightResponse, HotelResponse, SightsResponse
 
 
 def format_api_data(data_type: str, data: Union[List[Union[FlightResponse, HotelResponse, SightsResponse]], Dict[str, Any]]) -> str:

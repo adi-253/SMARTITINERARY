@@ -2,11 +2,11 @@ import sys
 sys.path.append('')
 import asyncio
 from fastapi import APIRouter, HTTPException
-from backend.models.api_models import RequestResponse
-from backend.modules.Service_Api import flight_schedules, hotel_list, tourist_attractions
-from backend.modules.helper import format_api_data
-from backend.agents.crew_agent import generate_itinerary
-from backend.utils.logger import get_logger
+from models.api_models import RequestResponse
+from modules.Service_Api import flight_schedules, hotel_list, tourist_attractions
+from modules.helper import format_api_data
+from agents.crew_agent import generate_itinerary
+from utils.logger import get_logger
 
 router = APIRouter()
 logger = get_logger(__name__)

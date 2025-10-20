@@ -2,9 +2,9 @@ import sys
 sys.path.append('')
 import asyncio
 from crewai import Agent,Task,Process,Crew
-from backend.agents.llm import llm_model
+from agents.llm import llm_model
 from datetime import datetime
-from backend.utils.logger import get_logger
+from utils.logger import get_logger
 
 logger = get_logger(__name__)
 

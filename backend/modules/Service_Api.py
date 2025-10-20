@@ -5,8 +5,8 @@ from typing import List
 import asyncio
 import serpapi
 import os
-from backend.models.api_models import Sights, FlightSchedule, HotelDetails, FlightResponse, HotelResponse, SightsResponse
-from backend.utils.logger import get_logger
+from models.api_models import Sights, FlightSchedule, HotelDetails, FlightResponse, HotelResponse, SightsResponse
+from utils.logger import get_logger
 from dotenv import load_dotenv
 load_dotenv()
 

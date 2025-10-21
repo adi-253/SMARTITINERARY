@@ -8,89 +8,115 @@
   </head>
   <body>
     <header>
-      <h1>Smart Itinerary Planner</h1>
-      <p>Generate a travel plan by entering basic trip details below.</p>
+      <div class="header-content">
+        <div class="header-icon">✈️</div>
+        <h1>Smart Itinerary Planner</h1>
+        <p>Plan your perfect trip with AI-powered recommendations</p>
+      </div>
     </header>
 
     <main>
       <section class="card">
         <form id="itinerary-form">
-          <h2>Flight Details</h2>
+          <div class="section-header">
+            <span class="section-icon">✈️</span>
+            <h2>Flight Details</h2>
+          </div>
           <div class="grid">
-            <label
-              >Departure Airport (IATA)
+            <label>
+              <span class="label-text">Departure Airport</span>
               <input
                 name="departure_airport_code"
                 maxlength="3"
-                placeholder="JFK"
+                placeholder="e.g., JFK"
                 required
               />
             </label>
-            <label
-              >Arrival Airport (IATA)
+            <label>
+              <span class="label-text">Arrival Airport</span>
               <input
                 name="arrival_airport_code"
                 maxlength="3"
-                placeholder="LAX"
+                placeholder="e.g., LAX"
                 required
               />
             </label>
-            <label
-              >Outbound Date
+            <label>
+              <span class="label-text">Outbound Date</span>
               <input type="date" name="outbound_date" required />
             </label>
-            <label
-              >Return Date
+            <label>
+              <span class="label-text">Return Date</span>
               <input type="date" name="return_date" required />
             </label>
           </div>
 
-          <h2>Hotel Details</h2>
+          <div class="section-header">
+            <span class="section-icon">🏨</span>
+            <h2>Hotel Details</h2>
+          </div>
           <div class="grid">
-            <label
-              >City
-              <input name="city" placeholder="Los Angeles" required />
+            <label>
+              <span class="label-text">City</span>
+              <input name="city" placeholder="e.g., Los Angeles" required />
             </label>
-            <label
-              >Check-in Date
+            <label>
+              <span class="label-text">Check-in Date</span>
               <input type="date" name="check_in_date" required />
             </label>
-            <label
-              >Check-out Date
+            <label>
+              <span class="label-text">Check-out Date</span>
               <input type="date" name="check_out_date" required />
             </label>
-            <label
-              >Hotel Class (e.g. 4,5)
-              <input name="hotel_class" placeholder="4,5" />
+            <label>
+              <span class="label-text">Hotel Class</span>
+              <input name="hotel_class" placeholder="e.g., 4,5" />
             </label>
           </div>
 
-          <h2>Sights / Interests</h2>
-          <label
-            >Search Query
+          <div class="section-header">
+            <span class="section-icon">🎯</span>
+            <h2>Sights & Interests</h2>
+          </div>
+          <label>
+            <span class="label-text">What would you like to explore?</span>
             <input
               name="sights_query"
-              placeholder="Los Angeles top attractions"
+              placeholder="e.g., Los Angeles top attractions, museums, beaches"
               required
             />
           </label>
 
           <div class="actions">
-            <button type="submit">Generate Itinerary</button>
-            <button type="reset" class="secondary">Reset</button>
+            <button type="submit" class="btn-primary">
+              <span class="btn-icon">🚀</span>
+              Generate Itinerary
+            </button>
+            <button type="reset" class="btn-secondary">
+              <span class="btn-icon">↻</span>
+              Reset
+            </button>
           </div>
         </form>
       </section>
 
-      <section id="output-section" class="card hidden">
-        <h2>Generated Itinerary</h2>
+      <section id="output-section" class="card output-card hidden">
+        <div class="section-header">
+          <span class="section-icon">📋</span>
+          <h2>Your Itinerary</h2>
+        </div>
         <div id="status" class="status"></div>
         <div id="itinerary" class="itinerary"></div>
-        <button id="download-pdf-btn" class="download-btn hidden">
-          Download PDF
+        <button id="download-pdf-btn" class="btn-download hidden">
+          <span class="btn-icon">📄</span>
+          Download as PDF
         </button>
       </section>
     </main>
+
+    <footer>
+      <p>✨ Powered by AI • Smart Itinerary Planner</p>
+    </footer>
 
     <script src="script.js"></script>
   </body>

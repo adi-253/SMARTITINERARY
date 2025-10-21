@@ -9,7 +9,7 @@ const downloadPdfBtn = document.getElementById('download-pdf-btn');
 const API_URL = 'https://smartitinerary-2.onrender.com/plan-itinerary';
 
 // const API_URL = 'http://localhost:8000/plan-itinerary';
-const PDF_URL = 'http://localhost:8000/generate-pdf';
+const PDF_URL = 'https://smartitinerary-2.onrender.com/generate-pdf';
 
 // Store the current itinerary text for PDF generation
 let currentItinerary = '';
@@ -47,7 +47,14 @@ form.addEventListener('submit', async (e) => {
   outputSection.classList.remove('hidden');
   itineraryDiv.textContent = '';
   downloadPdfBtn.classList.add('hidden'); // Hide download button while loading
-  setStatus('Requesting itinerary...');
+
+  // Disable form during submission
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="btn-icon">⏳</span> Generating...';
+
+  setStatus('🚀 Creating your personalized itinerary...');
   const fd = new FormData(form);
   const payload = buildPayload(fd);
 
@@ -63,18 +70,25 @@ form.addEventListener('submit', async (e) => {
       throw new Error(err.detail || 'Server error');
     }
     const data = await res.json();
-    setStatus('Itinerary generated successfully!', 'success');
+    setStatus('✅ Itinerary generated successfully!', 'success');
     // Backend returns markdown-like text. We can do a very small conversion for headers + bold
     currentItinerary = data.itinerary || 'No itinerary returned.';
     itineraryDiv.innerHTML = renderMarkdownLite(currentItinerary);
 
     // Show download button after successful generation
     downloadPdfBtn.classList.remove('hidden');
+
+    // Scroll to results
+    outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (err) {
     console.error(err);
-    setStatus('Error: ' + err.message, 'error');
+    setStatus('❌ Error: ' + err.message, 'error');
     itineraryDiv.textContent = '';
     currentItinerary = '';
+  } finally {
+    // Re-enable form
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
   }
 });
 
@@ -108,8 +122,13 @@ downloadPdfBtn.addEventListener('click', async () => {
     return;
   }
 
+  const originalBtnText = downloadPdfBtn.innerHTML;
+  downloadPdfBtn.disabled = true;
+  downloadPdfBtn.innerHTML =
+    '<span class="btn-icon">⏳</span> Generating PDF...';
+
   try {
-    setStatus('Generating PDF...');
+    setStatus('📄 Generating your PDF...');
     const res = await fetch(PDF_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -132,9 +151,12 @@ downloadPdfBtn.addEventListener('click', async () => {
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
 
-    setStatus('PDF downloaded successfully!', 'success');
+    setStatus('✅ PDF downloaded successfully!', 'success');
   } catch (err) {
     console.error(err);
-    setStatus('Error generating PDF: ' + err.message, 'error');
+    setStatus('❌ Error generating PDF: ' + err.message, 'error');
+  } finally {
+    downloadPdfBtn.disabled = false;
+    downloadPdfBtn.innerHTML = originalBtnText;
   }
 });
